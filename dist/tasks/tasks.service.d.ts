@@ -4,8 +4,10 @@ import { CreateTaskDto } from './dto/create-task.dto';
 export declare class TasksService {
     private tasksRepository;
     constructor(tasksRepository: Repository<Task>);
-    create(createTaskDto: CreateTaskDto, userId: string): unknown;
-    findAll(): unknown;
-    update(id: string, updateTaskDto: any, userId: string): unknown;
-    remove(id: string, userId: string): unknown;
+    create(createTaskDto: CreateTaskDto, userId: string): Promise<Task>;
+    findAll(): Promise<Task[]>;
+    update(id: string, updateTaskDto: any, userId: string): Promise<Task>;
+    remove(id: string, userId: string): Promise<{
+        success: boolean;
+    }>;
 }

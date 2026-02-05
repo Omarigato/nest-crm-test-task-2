@@ -1,16 +1,25 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common'; // Импортируем инструмент
+import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Эта строка заставляет сервер проверять длину текста и типы данных
   app.useGlobalPipes(new ValidationPipe({
-    whitelist: true, // Удаляет поля, которых нет в DTO
-    forbidNonWhitelisted: true, // Выдает ошибку, если прислали лишние поля
-    transform: true, // Автоматически превращает данные в нужные типы
+    whitelist: true,
+    forbidNonWhitelisted: true,
+    transform: true,
   }));
+
+  const config = new DocumentBuilder()
+    .setTitle('CRM API')
+    .setDescription('The CRM API description')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.PORT ?? 3000);
 }

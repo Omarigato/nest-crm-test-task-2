@@ -5,7 +5,7 @@ export declare class UsersService {
     private usersRepository;
     constructor(usersRepository: Repository<User>);
     create(createUserDto: CreateUserDto): Promise<User>;
-    findAll(): any;
+    findAll(): Promise<User[]>;
     findByEmail(email: string): Promise<User | null>;
     findOne(email: string): Promise<User | undefined>;
     findById(id: string): Promise<User | undefined>;

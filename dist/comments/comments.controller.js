@@ -13,11 +13,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentsController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const comments_service_1 = require("./comments.service");
 const create_comment_dto_1 = require("./dto/create-comment.dto");
 const update_comment_dto_1 = require("./dto/update-comment.dto");
 const auth_guard_1 = require("../auth/auth.guard");
+const swagger_1 = require("@nestjs/swagger");
 let CommentsController = class CommentsController {
     commentsService;
     constructor(commentsService) {
@@ -42,6 +44,9 @@ let CommentsController = class CommentsController {
 exports.CommentsController = CommentsController;
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a comment' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Comment created' }),
+    openapi.ApiResponse({ status: 201, type: require("./entities/comment.entity").Comment }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -50,6 +55,8 @@ __decorate([
 ], CommentsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Get comments by task_id' }),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/comment.entity").Comment] }),
     __param(0, (0, common_1.Query)('task_id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -57,6 +64,8 @@ __decorate([
 ], CommentsController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get comment by ID' }),
+    openapi.ApiResponse({ status: 200, type: require("./entities/comment.entity").Comment }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
@@ -64,6 +73,8 @@ __decorate([
 ], CommentsController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a comment' }),
+    openapi.ApiResponse({ status: 200, type: Object }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Request)()),
@@ -73,6 +84,8 @@ __decorate([
 ], CommentsController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a comment' }),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -80,6 +93,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], CommentsController.prototype, "remove", null);
 exports.CommentsController = CommentsController = __decorate([
+    (0, swagger_1.ApiTags)('Comments'),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Controller)('comments'),
     __metadata("design:paramtypes", [comments_service_1.CommentsService])

@@ -8,9 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Task = void 0;
+const openapi = require("@nestjs/swagger");
 const typeorm_1 = require("typeorm");
 let Task = class Task {
     id;
@@ -19,6 +19,9 @@ let Task = class Task {
     comment;
     created_at;
     updated_at;
+    static _OPENAPI_METADATA_FACTORY() {
+        return { id: { required: true, type: () => String }, user_id: { required: true, type: () => String }, description: { required: true, type: () => String }, comment: { required: true, type: () => String }, created_at: { required: true, type: () => Date }, updated_at: { required: true, type: () => Date } };
+    }
 };
 exports.Task = Task;
 __decorate([
@@ -39,11 +42,11 @@ __decorate([
 ], Task.prototype, "comment", void 0);
 __decorate([
     (0, typeorm_1.CreateDateColumn)(),
-    __metadata("design:type", typeof (_a = typeof Date !== "undefined" && Date) === "function" ? _a : Object)
+    __metadata("design:type", Date)
 ], Task.prototype, "created_at", void 0);
 __decorate([
     (0, typeorm_1.UpdateDateColumn)(),
-    __metadata("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
+    __metadata("design:type", Date)
 ], Task.prototype, "updated_at", void 0);
 exports.Task = Task = __decorate([
     (0, typeorm_1.Entity)('tasks')

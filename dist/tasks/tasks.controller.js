@@ -13,9 +13,13 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TasksController = void 0;
+const openapi = require("@nestjs/swagger");
 const common_1 = require("@nestjs/common");
 const tasks_service_1 = require("./tasks.service");
 const auth_guard_1 = require("../auth/auth.guard");
+const create_task_dto_1 = require("./dto/create-task.dto");
+const update_task_dto_1 = require("./dto/update-task.dto");
+const swagger_1 = require("@nestjs/swagger");
 let TasksController = class TasksController {
     tasksService;
     constructor(tasksService) {
@@ -37,29 +41,38 @@ let TasksController = class TasksController {
 exports.TasksController = TasksController;
 __decorate([
     (0, common_1.Post)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Create a new task' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Task created' }),
+    openapi.ApiResponse({ status: 201, type: require("./entities/task.entity").Task }),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [create_task_dto_1.CreateTaskDto, Object]),
     __metadata("design:returntype", void 0)
 ], TasksController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all tasks' }),
+    openapi.ApiResponse({ status: 200, type: [require("./entities/task.entity").Task] }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], TasksController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a task' }),
+    openapi.ApiResponse({ status: 200, type: require("./entities/task.entity").Task }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Request)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:paramtypes", [String, update_task_dto_1.UpdateTaskDto, Object]),
     __metadata("design:returntype", void 0)
 ], TasksController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a task' }),
+    openapi.ApiResponse({ status: 200 }),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Request)()),
     __metadata("design:type", Function),
@@ -67,6 +80,8 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], TasksController.prototype, "remove", null);
 exports.TasksController = TasksController = __decorate([
+    (0, swagger_1.ApiTags)('Tasks'),
+    (0, swagger_1.ApiBearerAuth)(),
     (0, common_1.Controller)('tasks'),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     __metadata("design:paramtypes", [tasks_service_1.TasksService])

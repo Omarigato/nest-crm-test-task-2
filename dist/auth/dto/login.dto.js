@@ -9,27 +9,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateCommentDto = void 0;
+exports.LoginDto = void 0;
 const openapi = require("@nestjs/swagger");
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
-class CreateCommentDto {
-    text;
-    task_id;
+class LoginDto {
+    email;
+    password;
     static _OPENAPI_METADATA_FACTORY() {
-        return { text: { required: true, type: () => String, minLength: 1, maxLength: 1000 }, task_id: { required: true, type: () => String, format: "uuid" } };
+        return { email: { required: true, type: () => String, format: "email" }, password: { required: true, type: () => String, minLength: 6 } };
     }
 }
-exports.CreateCommentDto = CreateCommentDto;
+exports.LoginDto = LoginDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'This is a comment', description: 'Content of the comment' }),
+    (0, swagger_1.ApiProperty)({ example: 'user@example.com', description: 'The email of the user' }),
+    (0, class_validator_1.IsEmail)({}, { message: 'Incorrect email format' }),
+    __metadata("design:type", String)
+], LoginDto.prototype, "email", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'password123', description: 'The password of the user' }),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.Length)(1, 1000, { message: 'Comment text must be between 1 and 1000 characters' }),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.MinLength)(6, { message: 'Password must be at least 6 characters long' }),
     __metadata("design:type", String)
-], CreateCommentDto.prototype, "text", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ example: 'uuid-string', description: 'Task ID' }),
-    (0, class_validator_1.IsUUID)(),
-    __metadata("design:type", String)
-], CreateCommentDto.prototype, "task_id", void 0);
-//# sourceMappingURL=create-comment.dto.js.map
+], LoginDto.prototype, "password", void 0);
+//# sourceMappingURL=login.dto.js.map

@@ -8,12 +8,15 @@ import { Task } from './tasks/entities/task.entity';
 import { CommentsModule } from './comments/comments.module';
 import { Comment } from './comments/entities/comment.entity';
 
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5433, 
+      port: 5433,
       username: 'postgres',
       password: 'password',
       database: 'crm_db',
@@ -25,5 +28,7 @@ import { Comment } from './comments/entities/comment.entity';
     TasksModule,
     CommentsModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

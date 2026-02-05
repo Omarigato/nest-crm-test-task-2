@@ -1,9 +1,13 @@
 import { TasksService } from './tasks.service';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 export declare class TasksController {
     private readonly tasksService;
     constructor(tasksService: TasksService);
-    create(createTaskDto: any, req: any): unknown;
-    findAll(): unknown;
-    update(id: string, updateTaskDto: any, req: any): unknown;
-    remove(id: string, req: any): unknown;
+    create(createTaskDto: CreateTaskDto, req: any): Promise<import("./entities/task.entity").Task>;
+    findAll(): Promise<import("./entities/task.entity").Task[]>;
+    update(id: string, updateTaskDto: UpdateTaskDto, req: any): Promise<import("./entities/task.entity").Task>;
+    remove(id: string, req: any): Promise<{
+        success: boolean;
+    }>;
 }
